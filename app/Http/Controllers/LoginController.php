@@ -13,36 +13,33 @@ class LoginController extends Controller
     public function viewLogin() {
         return view('admin.dangnhap.login');
     }
-
-    public function xuLyDangNhap(Request $request){
-
-        //2 request này nhận vào từ bên name của ô input
+    
+    public function xuLyDangNhap(Request $request)
+    {
         $username = $request->username;
         $password = $request->password;
-
-        //2 chuwx username và password trong dấu nháy
-        //tương ứng với 2 cột username và password trong bảng
-        // nhanvien
 
         $arr = [
             'username' => $username,
             'password' => $password
         ];
-
-        // dd($arr);
-        //Hàm attempt dùng để kiểm tra xem đăng nhập đúng hay không
-        //hàm này có giá trị true hoặc false
-        if (Auth::guard('nhanvien')->attempt($arr)) {
-            //Nếu đăng nhập thành công thì cho vào trang sản phẩm
+        // kiem tra mang
+        // dd(Auth::guard('khachhang')->attempt($arr));
+        if (Auth::guard('nhanvien')->attempt($arr)){
+            // dd($arr);
+            // dd('Dang nhap thanh cong');
             return redirect()->route('danh-sach-san-pham');
-        } else {
-            //Nếu sai tài khoản hoặc mật khẩu thì thông báo
-            //Ở đây các bạn có thể sửa lại thành Session::flash
-            //để thông báo ở ngoài giao diện cho ĐẸP
-            dd('Tài khoản và mật khẩu chưa chính xác');
+        }else{
+            // Tra ve du lieu dang json de ajax lay chuoi
+            return response()->json(
+                [
+                    'err' => 'Tài khoản hoặc mật khẩu không chính xác!',
+                    'req' => 'Yêu cầu đăng nhập lại'
+                ]
+                ,200);
         }
     }
-    
+
     public function dangXuat(Request $request)
     {
         if(Auth::guard('nhanvien')->check()){

@@ -30,7 +30,7 @@
             </div>
             </div>
             <div class="input-group mb-3">
-            <input type="password" class="form-control" placeholder="Mật khẩu"  name="password"">
+            <input type="password" class="form-control" placeholder="Mật khẩu"  name="password">
             <div class="input-group-append">
                 <div class="input-group-text">
                 <span class="fas fa-lock"></span>
@@ -38,7 +38,7 @@
             </div>
             </div>
             <div class="">
-                <button class="btn btn-primary" type="submit">Đăng nhập</button>
+                <button class="btn btn-primary" id="login" type="submit">Đăng nhập</button>
             </div>
         </form>
         <p class="mb-1">
@@ -54,6 +54,35 @@
 <!-- /.login-box -->
 
 @include('admin.template.js')
+<script>
+  $(document).ready(function () {
+    $('#login').click(function (e) { 
+      e.preventDefault();
+      var username = $("input[name='username']").val();
+      var password = $("input[name='password']").val();
+      console.log(username);
+      console.log(password);
 
+      // Xu ly ajax
+      $ajax({
+        type: "post",
+        url: "{{route('xu-ly-dang-nhap')}}",
+        headers: {
+                        'X-CSRF-TOKEN': $('input[name="_token"]').val()
+                },
+        data:{
+          // Ten request : Ten bien
+          username : username,
+          password : password
+        }
+        datatype: "json",
+        success: function(response){
+          console.log('response');
+          $(selector).val(value);
+        }
+      })
+    });
+  });
+</script>
 </body>
 </html>
