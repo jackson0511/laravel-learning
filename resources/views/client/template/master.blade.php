@@ -45,6 +45,54 @@
             @yield('content')
         </div>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Giỏ hàng</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        @php $i=1 @endphp
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên sản phẩm</th>
+                            <th>Số lượng</th>
+                            <th>Đơn giá</th>
+                            <th>Giá</th>
+                        </tr>
+                        @foreach ($cart as $item)
+                        <tr>
+                            <td>{{$i++}}</td>
+                            <td>{{$item->name}}</td>
+                            <td>
+                                <p id="soluong">{{$item->quantity}}</p>
+                            </td>
+                            <td>
+                                <p id="donGia">{{number_format($item->price)}}</p>
+                            </td>
+                            <td>
+                                <p id="gia">{{number_format($item->getPriceSum())}}</p>
+                            </td>
+                            <td><a href="{{route('delitem',['idProduct'=>$item->id])}}"class="btn btn-danger">X</a></td>
+                        </tr>
+                        @endforeach
+                        <tr>
+                            <td colspan="3"><b>Tổng tiền:  </b>{{number_format(Cart::getSubTotal())}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <a class="btn btn-success" href="{{route('thanh-toan')}}">Thanh toán</a>
+                </div>
+            </div>
+        </div>
+    </div>
     @include('client.template.js')
 </body>
 </html>

@@ -25,7 +25,7 @@
             <input class="form-control mr-sm-2" type="search" placeholder="Tìm kiếm vàng . . " aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
         </form>
-        <a href="{{route('cart')}}" class="btn btn-default"><i class="fas fa-shopping-cart"></i> {{Cart::getTotalQuantity()}}</a>
+        <a href="#" class="btn btn-default" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-shopping-cart"></i> {{Cart::getTotalQuantity()}}</a>
         <a href="{{route('cartclear')}}" class="btn btn-default"><i class="fas fa-trash"></i></a>
     </div>
 </nav>
